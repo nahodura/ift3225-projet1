@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+</head>
+<body>
+  <h2>Connexion</h2>
+  <form method="POST" action="api/authentification/connexion.php">
+    <label for="nom">Nom d'utilisateur :</label>
+    <input type="text" name="nom" id="nom" required><br><br>
+    <label for="motDePasse">Mot de passe :</label>
+    <input type="password" name="motDePasse" id="motDePasse" required><br><br>
+    <button type="submit">Connexion</button>
+  </form>
+  <br>
+  <a href="inscription.html">Créer un compte</a>
+</body>
+</html>

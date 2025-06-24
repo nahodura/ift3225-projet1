@@ -17,12 +17,12 @@ if ($jeu_id === '') {
 $verif = $pdo->prepare("SELECT jeu_id FROM jeux WHERE jeu_id = ? AND id_utilisateur = ?");
 $verif->execute([$jeu_id, $_SESSION['id_utilisateur']]);
 if (!$verif->fetch()) {
-    echo "Suppression non autorisée.";
+    echo "La suppression de ce jeu est non autorisée.";
     exit;
 }
 
 $requete = $pdo->prepare("DELETE FROM jeux WHERE jeu_id = ? AND id_utilisateur = ?");
 $requete->execute([$jeu_id, $_SESSION['id_utilisateur']]);
 
-echo "Le jeu supprimé avec succès.";
+echo "Le jeu a été supprimé avec succès.";
 ?>

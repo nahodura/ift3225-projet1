@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription</title>
+</head>
+<body>
+  <h2>Créer un compte</h2>
+  <form method="POST" action="api/authentification/inscription.php">
+    <label for="nom">Nom d'utilisateur :</label>
+    <input type="text" name="nom" id="nom" required><br><br>
+
+    <label for="motDePasse">Mot de passe :</label>
+    <input type="password" name="motDePasse" id="motDePasse" required><br><br>
+
+    <button type="submit">S’inscrire</button>
+  </form>
+  <br>
+  <a href="connexion.html">Déjà inscrit ? Se connecter</a>
+</body>
+</html>
