@@ -1,10 +1,9 @@
 <?php
-require_once(__DIR__ . '/pwd.php');
 
-$host = 'www-ens.iro.umontreal.ca';  
+$host = 'localhost';  
 $user = 'durandna';        
-$schema = 'durandna_ift3225_projet1';  
-
+$schema = 'durandna_projet1';
+$db_password = '';
 
 try {
     $pdo = new PDO(
