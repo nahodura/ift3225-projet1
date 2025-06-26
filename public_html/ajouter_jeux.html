@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un jeu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajouter un jeu</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="form-container">
     <h2>Ajouter un jeu</h2>
     <form method="POST" action="api/jeux/ajouter.php">
-        <label for="nom">Nom du jeu :</label>
-        <input type="text" name="nom" id="nom" required><br><br>
+      <label for="nom">Nom du jeu</label>
+      <input type="text" name="nom" id="nom" required />
 
-        <label for="genre">Genre :</label>
-        <input type="text" name="genre" id="genre"><br><br>
+      <label for="genre">Genre</label>
+      <input type="text" name="genre" id="genre" />
 
-        <label for="plateforme">Plateforme :</label>
-        <input type="text" name="plateforme" id="plateforme"><br><br>
+      <label for="plateforme">Plateforme</label>
+      <input type="text" name="plateforme" id="plateforme" />
 
-        <label for="description">Description :</label><br>
-        <textarea name="description" id="description" rows="4" cols="40"></textarea><br><br>
+      <label for="description">Description</label>
+      <textarea name="description" id="description" rows="4"></textarea>
 
-        <label for="image">Image (nom du fichier) :</label>
-        <input type="text" name="image" id="image"><br><br>
+      <label for="image">Image (nom ou URL)</label>
+      <input type="text" name="image" id="image" />
 
-        <button type="submit">Ajouter</button>
+      <button type="submit">Ajouter le jeu</button>
     </form>
-    <br>
-    <a href="lister_jeux.php">Voir mes jeux</a>
+    <p class="switch-link">
+      <a href="afficher_jeux.php">Voir mes jeux</a>
+    </p>
+  </div>
 </body>
 </html>
+
