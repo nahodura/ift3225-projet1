@@ -9,7 +9,8 @@ if (isset($_SESSION['id_utilisateur'])) {
     $requete->execute([$session_id]);
 
     session_destroy();
-    echo "Déconnexion réussie.";
+    header("Location: ../../connexion.html");
+    exit;
 } else {
     echo "Aucune session active.";
 }

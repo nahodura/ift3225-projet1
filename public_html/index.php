@@ -16,8 +16,8 @@ if (!isset($_SESSION['id_utilisateur'])) {
 </head>
 <body>
   <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom_utilisateur']); ?> !</h1>
-  <a href="ajouter_jeu.html">Ajouter un jeu</a><br>
-  <a href="lister_jeux.php">Voir mes jeux</a><br>
+  <a href="ajouter_jeux.html">Ajouter un jeu</a><br>
+  <a href="afficher_jeux.php">Voir mes jeux</a><br>
   <form method="POST" action="api/authentification/deconnexion.php">
       <button type="submit">Déconnexion</button>
   </form>

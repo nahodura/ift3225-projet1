@@ -26,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $requete2 = $pdo->prepare("REPLACE INTO account_sessions (session_id, account_id, login_time) VALUES (?, ?, NOW())");
         $requete2->execute([$session_id, $utilisateur['account_id']]);
 
-        echo "Connexion réussie.";
+        header("Location: ../../index.php");
+        exit;
     } else {
         echo "Nom d'utilisateur ou mot de passe incorrect.";
     }

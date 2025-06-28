@@ -33,6 +33,6 @@ $session_id = session_id();
 $requete = $pdo->prepare("REPLACE INTO account_sessions (session_id, account_id, login_time) VALUES (?, ?, NOW())");
 $requete->execute([$session_id, $id_utilisateur]);
 
-echo "<h2>Bienvenue, " . htmlspecialchars($nom) . " !</h2>";
-echo "<a href='../../index.php'>Aller à l'accueil</a>";
+header("Location: ../../index.php");
+exit;
 ?>
