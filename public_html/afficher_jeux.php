@@ -13,7 +13,7 @@ $requete->execute([$_SESSION['id_utilisateur']]);
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 echo "<h2>Mes jeux</h2>";
-echo '<a href="ajouter_jeu.html">Ajouter un jeu</a><br><br>';
+echo '<a href="ajouter_jeux.html">Ajouter un jeu</a><br><br>';
 
 foreach ($jeux as $jeu) {
     echo "<form method='POST' action='api/jeux/modifier.php'>";
@@ -33,5 +33,11 @@ foreach ($jeux as $jeu) {
     echo "</form>";
 
     echo "<hr>";
-}
+    }
+
+echo '<a href="index.php">Retour au menu</a><br>';
+echo '<form method="POST" action="api/authentification/deconnexion.php">';
+echo '<button type="submit">Déconnexion</button>';
+echo '</form>';
+
 ?>

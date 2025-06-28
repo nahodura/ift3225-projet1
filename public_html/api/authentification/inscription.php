@@ -2,17 +2,18 @@
 session_start();
 require_once("../../includes/db_inc.php");
 
-$nom = $_POST['nom'] ?? '';
-$motDePasse = $_POST['motDePasse'] ?? '';
+$account_name   = trim($_POST['account_name']   ?? '');
+$account_passwd = trim($_POST['account_passwd'] ?? '');
+$account_enabled = isset($_POST['account_enabled']) ? 1 : 0;
 
-if ($nom === '' || $motDePasse === '') {
+if ($account_name === '' || $account_passwd === '') {
     echo "Veuillez remplir tous les champs.";
     exit;
 }
 
 // si username existe déjà
 $requete = $pdo->prepare("SELECT account_id FROM accounts WHERE account_name = ?");
-$requete->execute([$nom]);
+$requete->execute([$account_name]);
 if ($requete->fetch()) {
     echo "Nom d'utilisateur déjà utilisé. <a href='../../inscription.html'>Réessayer</a>";
     exit;
@@ -22,7 +23,11 @@ $hash = password_hash($motDePasse, PASSWORD_DEFAULT);
 
 $requete = $pdo->prepare("INSERT INTO accounts (account_name, account_passwd) VALUES (?, ?)");
 $requete->execute([$nom, $hash]);
-
+$requete = $pdo->prepare(
+   "INSERT INTO accounts (account_name, account_passwd, account_enabled)
+    VALUES (?, ?, ?)"
+    );
+$requete->execute([$account_name, $hash, $account_enabled]);
 $id_utilisateur = $pdo->lastInsertId();
 
 // nouvelle session
