@@ -9,6 +9,7 @@
 <body>
   <div class="form-container">
     <h2>Ajouter un jeu</h2>
+      <div id="message" class="message"></div>
       <form method="POST" action="api/jeux/ajouter.php" enctype="multipart/form-data">
       <label for="nom">Nom du jeu</label>
       <input type="text" name="nom" id="nom" required />
@@ -31,6 +32,14 @@
       <a href="afficher_jeux.php">Voir mes jeux</a>
     </p>
   </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const msg = document.getElementById('message');
+    if (params.get('erreur') === 'champs') {
+      msg.textContent = 'Le nom du jeu est requis.';
+      msg.classList.add('error');
+    }
+  </script>
 </body>
 </html>
 

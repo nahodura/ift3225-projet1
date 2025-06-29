@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $requete2 = $pdo->prepare("REPLACE INTO account_sessions (session_id, account_id, login_time) VALUES (?, ?, NOW())");
         $requete2->execute([$session_id, $utilisateur['account_id']]);
 
-        header("Location: ../../index.php");
+        header("Location: ../../index.php?success=connexion");
         exit;
     } else {
         header("Location: ../../connexion.html?erreur=identifiants");

@@ -9,10 +9,10 @@ if (isset($_SESSION['id_utilisateur'])) {
     $requete->execute([$session_id]);
 
     session_destroy();
-    header("Location: ../../connexion.html");
+    header("Location: ../../connexion.html?success=deconnexion");
     exit;
 } else {
-    header("Location: ../../connexion.html");
+    header("Location: ../../connexion.html?success=deconnexion");
     exit;
 }
 

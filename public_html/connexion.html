@@ -20,6 +20,22 @@
     </form>
     <p class="switch-link">Pas encore inscrit ? <a href="inscription.html">Créer un compte</a></p>
   </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const msg = document.getElementById('message');
+    const err = params.get('erreur');
+    const success = params.get('success');
+    if (err === 'champs') {
+      msg.textContent = 'Veuillez remplir tous les champs.';
+      msg.classList.add('error');
+    } else if (err === 'identifiants') {
+      msg.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+      msg.classList.add('error');
+    } else if (success === 'deconnexion') {
+      msg.textContent = 'Déconnecté avec succès.';
+      msg.classList.add('success');
+    }
+  </script>
 </body>
 </html>
 

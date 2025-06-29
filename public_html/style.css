@@ -156,3 +156,20 @@ button:hover {
   text-decoration: underline;
 }
 
+.message {
+  margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.message.error {
+  background-color: #ffe0e0;
+  color: #c00;
+}
+
+.message.success {
+  background-color: #e0ffe0;
+  color: #0a0;
+}
+
+

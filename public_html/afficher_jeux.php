@@ -8,6 +8,26 @@ if (!isset($_SESSION['id_utilisateur'])) {
     exit;
 }
 
+$erreurMsg = '';
+$successMsg = '';
+if (isset($_GET['erreur'])) {
+    if ($_GET['erreur'] === 'champs') {
+        $erreurMsg = 'Données manquantes.';
+    } elseif ($_GET['erreur'] === 'autorisation') {
+        $erreurMsg = 'Action non autorisée.';
+    }
+}
+if (isset($_GET['success'])) {
+    if ($_GET['success'] === 'ajout') {
+        $successMsg = 'Le jeu a été ajouté avec succès.';
+    } elseif ($_GET['success'] === 'modif') {
+        $successMsg = 'Jeu modifié.';
+    } elseif ($_GET['success'] === 'suppression') {
+        $successMsg = 'Jeu supprimé.';
+    }
+}
+
+
 // bar de filtrage
 // inspiration de l'extrait de code : 
 // https://stackoverflow.com/questions/47486870/how-to-create-filter-for-a-search-in-php
@@ -51,54 +71,62 @@ $queryDB .= " ORDER BY date_creation DESC";
 $requete = $pdo->prepare($queryDB);
 $requete->execute($params);
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
+?>
 
-echo "<h2>Mes jeux</h2>";
-echo '<a href="ajouter_jeux.html">Ajouter un jeu</a><br><br>';
 
-echo '<div class="form-container">';
-echo '<h2>Filtrer</h2>';
-echo '<form method="GET" action="afficher_jeux.php">';
-echo '<label for="nom">Nom</label>';
-echo '<input type="text" name="nom" id="nom" value="'.htmlspecialchars($nom).'" />';
-echo '<label for="genre">Genre</label>';
-echo '<input type="text" name="genre" id="genre" value="'.htmlspecialchars($genre).'" />';
-echo '<label for="plateforme">Plateforme</label>';
-echo '<input type="text" name="plateforme" id="plateforme" value="'.htmlspecialchars($plateforme).'" />';
-echo '<label for="description">Description</label>';
-echo '<input type="text" name="description" id="description" value="'.htmlspecialchars($description).'" />';
-echo '<label for="date_debut">Date début</label>';
-echo '<input type="date" name="date_debut" id="date_debut" value="'.htmlspecialchars($date_debut).'" />';
-echo '<label for="date_fin">Date fin</label>';
-echo '<input type="date" name="date_fin" id="date_fin" value="'.htmlspecialchars($date_fin).'" />';
-echo '<button type="submit">Filtrer</button>';
-echo '</form>';
-echo '</div>';
-
-foreach ($jeux as $jeu) {
-    echo "<form method='POST' action='api/jeux/modifier.php' enctype='multipart/form-data'>";
-    echo "<input type='hidden' name='jeu_id' value='".htmlspecialchars($jeu['jeu_id'])."'>";
-    echo "<input type='hidden' name='current_image' value='".htmlspecialchars($jeu['image'])."'>";
-    echo "<strong>Nom:</strong> <input type='text' name='nom' value='".htmlspecialchars($jeu['nom'])."'><br>";
-    echo "<strong>Genre:</strong> <input type='text' name='genre' value='".htmlspecialchars($jeu['genre'])."'><br>";
-    echo "<strong>Plateforme:</strong> <input type='text' name='plateforme' value='".htmlspecialchars($jeu['plateforme'])."'><br>";
-    echo "<strong>Description:</strong> <textarea name='description'>".htmlspecialchars($jeu['description'])."</textarea><br>";
-    if ($jeu['image']) {
-        echo "<img src='img/".htmlspecialchars($jeu['image'])."' width='100'/><br>";
-    }
-    echo "<strong>Image:</strong> <input type='file' name='image' accept='image/*'><br>";
-    echo "<button type='submit'>Modifier</button>";
-    echo "</form>";
-
-    // formulaire de suppression
-    echo "<form method='POST' action='api/jeux/supprimer.php' style='display:inline'>";
-    echo "<input type='hidden' name='jeu_id' value='".htmlspecialchars($jeu['jeu_id'])."'>";
-    echo "<button type='submit' onclick='return confirm(\"Confirmer la suppression ?\");'>Supprimer</button>";
-    echo "</form>";
-
-    echo "<hr>";
-    }
-
-echo '<a href="index.php">Retour au menu</a><br>';
-echo '<form method="POST" action="api/authentification/deconnexion.php">';
-echo '<button type="submit">Déconnexion</button>';
-echo '</form>';
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes jeux</title>
+</head>
+<body>
+<?php if ($erreurMsg !== ''): ?>
+  <p class="message error"><?php echo $erreurMsg; ?></p>
+<?php endif; ?>
+<?php if ($successMsg !== ''): ?>
+  <p class="message success"><?php echo $successMsg; ?></p>
+<?php endif; ?>
+<h2>Mes jeux</h2>
+<a href="ajouter_jeux.html">Ajouter un jeu</a><br><br>
+<div class="form-container">
+  <h2>Filtrer</h2>
+  <form method="GET" action="afficher_jeux.php">
+    <label for="nom">Nom</label>
+    <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($nom); ?>" />
+    <label for="genre">Genre</label>
+    <input type="text" name="genre" id="genre" value="<?php echo htmlspecialchars($genre); ?>" />
+    <label for="plateforme">Plateforme</label>
+    <input type="text" name="plateforme" id="plateforme" value="<?php echo htmlspecialchars($plateforme); ?>" />
+    <label for="description">Description</label>
+    <input type="text" name="description" id="description" value="<?php echo htmlspecialchars($description); ?>" />
+    <label for="date_debut">Date début</label>
+    <input type="date" name="date_debut" id="date_debut" value="<?php echo htmlspecialchars($date_debut); ?>" />
+    <label for="date_fin">Date fin</label>
+    <input type="date" name="date_fin" id="date_fin" value="<?php echo htmlspecialchars($date_fin); ?>" />
+    <button type="submit">Filtrer</button>
+  </form>
+</div>
+<?php foreach ($jeux as $jeu): ?>
+  <form method="POST" action="api/jeux/modifier.php">
+    <input type="hidden" name="jeu_id" value="<?php echo htmlspecialchars($jeu['jeu_id']); ?>">
+    <strong>Nom:</strong> <input type="text" name="nom" value="<?php echo htmlspecialchars($jeu['nom']); ?>"><br>
+    <strong>Genre:</strong> <input type="text" name="genre" value="<?php echo htmlspecialchars($jeu['genre']); ?>"><br>
+    <strong>Plateforme:</strong> <input type="text" name="plateforme" value="<?php echo htmlspecialchars($jeu['plateforme']); ?>"><br>
+    <strong>Description:</strong> <textarea name="description"><?php echo htmlspecialchars($jeu['description']); ?></textarea><br>
+    <strong>Image:</strong> <input type="text" name="image" value="<?php echo htmlspecialchars($jeu['image']); ?>"><br>
+    <button type="submit">Modifier</button>
+  </form>
+  <form method="POST" action="api/jeux/supprimer.php" style="display:inline">
+    <input type="hidden" name="jeu_id" value="<?php echo htmlspecialchars($jeu['jeu_id']); ?>">
+    <button type="submit" onclick="return confirm('Confirmer la suppression ?');">Supprimer</button>
+  </form>
+  <hr>
+<?php endforeach; ?>
+<a href="index.php">Retour au menu</a><br>
+<form method="POST" action="api/authentification/deconnexion.php">
+  <button type="submit">Déconnexion</button>
+</form>
+</body>
+</html>

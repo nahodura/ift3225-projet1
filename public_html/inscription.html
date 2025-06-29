@@ -17,7 +17,19 @@
 
       <button type="submit">S'inscrire</button>
     </form>
-    <p class="switch-link">Déjà inscrit ? <a href="connexion.html">Se connecter</a></p>
+      <p class="switch-link">Déjà inscrit ? <a href="connexion.html">Se connecter</a></p>
   </div>
-</body>
-</html>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const msg = document.getElementById('message');
+    const err = params.get('erreur');
+    if (err === 'champs') {
+      msg.textContent = 'Veuillez remplir tous les champs.';
+      msg.classList.add('error');
+    } else if (err === 'existant') {
+      msg.textContent = "Nom d'utilisateur déjà utilisé.";
+      msg.classList.add('error');
+    }
+  </script>
+  </body>
+  </html>
