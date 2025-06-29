@@ -115,6 +115,9 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
     <strong>Genre:</strong> <input type="text" name="genre" value="<?php echo htmlspecialchars($jeu['genre']); ?>"><br>
     <strong>Plateforme:</strong> <input type="text" name="plateforme" value="<?php echo htmlspecialchars($jeu['plateforme']); ?>"><br>
     <strong>Description:</strong> <textarea name="description"><?php echo htmlspecialchars($jeu['description']); ?></textarea><br>
+        <?php if ($jeu['image']): ?>
+      <img src="img/<?php echo htmlspecialchars($jeu['image']); ?>" width="100" alt="<?php echo htmlspecialchars($jeu['nom']); ?>" /><br>
+    <?php endif; ?>
     <strong>Image:</strong> <input type="text" name="image" value="<?php echo htmlspecialchars($jeu['image']); ?>"><br>
     <button type="submit">Modifier</button>
   </form>
