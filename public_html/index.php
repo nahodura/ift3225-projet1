@@ -1,6 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['id_utilisateur']) || !isset($_SESSION['nom'])) {
+
+if (!isset($_SESSION['id_utilisateur']) || !isset($_SESSION['nom_utilisateur'])) {
     header("Location: connexion.html");
     exit;
 }
@@ -15,8 +16,8 @@ if (!isset($_SESSION['id_utilisateur']) || !isset($_SESSION['nom'])) {
 </head>
 <body class="centered-page">
     <div class="card home-card">
-        <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom']); ?> !</h1>
-        <a href="ajouter_jeu.html" class="primary-link"> Ajouter un jeu</a>
+        <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom_utilisateur']); ?> !</h1>
+        <a href="ajouter_jeux.html" class="primary-link"> Ajouter un jeu</a>
         <a href="afficher_jeux.php" class="primary-link"> Voir mes jeux</a>
         <form action="api/authentification/deconnexion.php" method="POST">
             <button type="submit" class="logout-button">Déconnexion</button>
