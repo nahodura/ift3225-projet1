@@ -2,17 +2,17 @@
 session_start();
 require_once("../../includes/db_inc.php");
 
-$account_name   = trim($_POST['account_name']   ?? '');
-$account_passwd = trim($_POST['account_passwd'] ?? '');
+$nom        = trim($_POST['nom']        ?? '');
+$motDePasse = trim($_POST['motDePasse'] ?? '');
 
-if ($account_name === '' || $account_passwd === '') {
+if ($nom === '' || $motDePasse === '') {
     echo "Veuillez remplir tous les champs.";
     exit;
 }
 
 // si username existe déjà
 $requete = $pdo->prepare("SELECT account_id FROM accounts WHERE account_name = ?");
-$requete->execute([$account_name]);
+$requete->execute([$nom]);
 if ($requete->fetch()) {
     echo "Nom d'utilisateur déjà utilisé. <a href='../../inscription.html'>Réessayer</a>";
     exit;
