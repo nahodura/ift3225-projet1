@@ -195,17 +195,28 @@ button:hover {
     text-align: center;
 }
 
-/* Liens principaux */
-.primary-link {
+/* Boutons d'action (liens stylisés) */
+.action-button {
     display: block;
-    margin: 12px 0;
-    text-decoration: none;
-    color: #4A3AFF;
+    margin: 12px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
     font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
 }
 
-.primary-link:hover {
-    text-decoration: underline;
+/* Boutons bleus */
+.blue-button {
+    background-color: #4A3AFF;
+    color: white;
+}
+
+.blue-button:hover {
+    background-color: #3a2ed9;
 }
 
 /* Bouton de déconnexion */
@@ -223,4 +234,5 @@ button:hover {
 .logout-button:hover {
     background-color: #e04345;
 }
+
 
