@@ -95,17 +95,16 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   <br>
 </div>
 <?php foreach ($jeux as $jeu): ?>
-  <form method="POST" action="api/jeux/modifier.php">
-    <input type="hidden" name="jeu_id" value="<?php echo htmlspecialchars($jeu['jeu_id']); ?>">
-    <strong>Nom:</strong> <input type="text" name="nom" value="<?php echo htmlspecialchars($jeu['nom']); ?>"><br>
-    <strong>Genre:</strong> <input type="text" name="genre" value="<?php echo htmlspecialchars($jeu['genre']); ?>"><br>
-    <strong>Plateforme:</strong> <input type="text" name="plateforme" value="<?php echo htmlspecialchars($jeu['plateforme']); ?>"><br>
-    <strong>Description:</strong> <textarea name="description"><?php echo htmlspecialchars($jeu['description']); ?></textarea><br>
-        <?php if ($jeu['image']): ?>
+  <div class="jeu">
+    <strong>Nom:</strong> <?php echo htmlspecialchars($jeu['nom']); ?><br>
+    <strong>Genre:</strong> <?php echo htmlspecialchars($jeu['genre']); ?><br>
+    <strong>Plateforme:</strong> <?php echo htmlspecialchars($jeu['plateforme']); ?><br>
+    <strong>Description:</strong> <?php echo nl2br(htmlspecialchars($jeu['description'])); ?><br>
+    <?php if ($jeu['image']): ?>
       <img src="img/<?php echo htmlspecialchars($jeu['image']); ?>" width="100" alt="<?php echo htmlspecialchars($jeu['nom']); ?>" /><br>
     <?php endif; ?>
-    <button type="submit">Modifier</button>
-  </form>
+    <a href="modifier_jeu.php?id=<?php echo $jeu['jeu_id']; ?>">Modifier</a>
+    </div>
   <form method="POST" action="api/jeux/supprimer.php" style="display:inline">
     <input type="hidden" name="jeu_id" value="<?php echo htmlspecialchars($jeu['jeu_id']); ?>">
     <button type="submit" onclick="return confirm('Confirmer la suppression ?');">Supprimer</button>
