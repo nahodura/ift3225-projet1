@@ -6,7 +6,7 @@ $nom        = trim($_POST['nom']        ?? '');
 $motDePasse = trim($_POST['motDePasse'] ?? '');
 
 if ($nom === '' || $motDePasse === '') {
-    echo "Veuillez remplir tous les champs.";
+    header("Location: ../../inscription.html?erreur=champs");
     exit;
 }
 
@@ -14,7 +14,7 @@ if ($nom === '' || $motDePasse === '') {
 $requete = $pdo->prepare("SELECT account_id FROM accounts WHERE account_name = ?");
 $requete->execute([$nom]);
 if ($requete->fetch()) {
-    echo "Nom d'utilisateur déjà utilisé. <a href='../../inscription.html'>Réessayer</a>";
+    header("Location: ../../inscription.html?erreur=existant");
     exit;
 }
 
@@ -59,4 +59,4 @@ $requete->execute([$session_id, $id_utilisateur]);
 
 header("Location: ../../index.php");
 exit;
-?>
+

@@ -3,7 +3,7 @@ session_start();
 require_once("../../includes/db_inc.php");
 
 if (!isset($_SESSION['id_utilisateur'])) {
-    echo "Non autorisé.";
+    header("Location: ../../connexion.html");
     exit;
 }
 
@@ -12,24 +12,28 @@ $description = $_POST['description'] ?? '';
 $genre = $_POST['genre'] ?? '';
 $plateforme = $_POST['plateforme'] ?? '';
 $image = '';
-if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-    $uploadDir = __DIR__ . '/../../img/';
-    $fichier = basename($_FILES['image']['name']);
-    $cheminDestination = $uploadDir . $fichier;
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $cheminDestination)) {
-        $image = $fichier;
+if (!empty($_FILES['image']['name'])) {
+    $targetDir = __DIR__ . '/../../img/';
+    $nomFichier = basename($_FILES['image']['name']);
+    $nomFichier = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nomFichier);
+    $chemin = $targetDir . uniqid('', true) . '_' . $nomFichier;
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $chemin)) {
+        $image = basename($chemin);
     }
-} else {
-    $image = $_POST['image'] ?? '';
+}
+
+if ($image === '') {
+    $image = 'no_image.png';
 }
 
 if ($nom === '') {
-    echo "Le nom est requis.";
+    header("Location: ../../ajouter_jeux.html?erreur=champs");
     exit;
 }
 
 $requete = $pdo->prepare("INSERT INTO jeux (nom, description, genre, plateforme, image, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)");
 $requete->execute([$nom, $description, $genre, $plateforme, $image, $_SESSION['id_utilisateur']]);
 
-echo "Le jeu a été ajouté avec succès.";
-?>
+header("Location: ../../afficher_jeux.php?success=ajout");
+exit;
+

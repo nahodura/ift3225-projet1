@@ -12,6 +12,7 @@ if (isset($_SESSION['id_utilisateur'])) {
     header("Location: ../../connexion.html");
     exit;
 } else {
-    echo "Aucune session active.";
+    header("Location: ../../connexion.html");
+    exit;
 }
-?>
+

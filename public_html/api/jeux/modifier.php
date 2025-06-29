@@ -3,7 +3,7 @@ session_start();
 require_once("../../includes/db_inc.php");
 
 if (!isset($_SESSION['id_utilisateur'])) {
-    echo "Non autorisé.";
+    header("Location: ../../connexion.html");
     exit;
 }
 
@@ -13,29 +13,35 @@ $description = $_POST['description'] ?? '';
 $genre = $_POST['genre'] ?? '';
 $plateforme = $_POST['plateforme'] ?? '';
 $image = $_POST['current_image'] ?? '';
-if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-    $uploadDir = __DIR__ . '/../../img/';
-    $fichier = basename($_FILES['image']['name']);
-    $cheminDestination = $uploadDir . $fichier;
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $cheminDestination)) {
-        $image = $fichier;
+if (!empty($_FILES['image']['name'])) {
+    $targetDir = __DIR__ . '/../../img/';
+    $nomFichier = basename($_FILES['image']['name']);
+    $nomFichier = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nomFichier);
+    $chemin = $targetDir . uniqid('', true) . '_' . $nomFichier;
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $chemin)) {
+        $image = basename($chemin);
     }
 }
 
+if ($image === '') {
+    $image = 'no_image.png';
+}
+
 if ($jeu_id === '' || $nom === '') {
-    echo "Données manquantes.";
+    header("Location: ../../afficher_jeux.php?erreur=champs");
     exit;
 }
 
 $verif = $pdo->prepare("SELECT jeu_id FROM jeux WHERE jeu_id = ? AND id_utilisateur = ?");
 $verif->execute([$jeu_id, $_SESSION['id_utilisateur']]);
 if (!$verif->fetch()) {
-    echo "Modification non autorisée.";
+    header("Location: ../../afficher_jeux.php?erreur=autorisation");
     exit;
 }
 
 $requete = $pdo->prepare("UPDATE jeux SET nom = ?, description = ?, genre = ?, plateforme = ?, image = ? WHERE jeu_id = ? AND id_utilisateur = ?");
 $requete->execute([$nom, $description, $genre, $plateforme, $image, $jeu_id, $_SESSION['id_utilisateur']]);
 
-echo "Jeu modifié.";
-?>
+header("Location: ../../afficher_jeux.php?success=modif");
+exit;
+

@@ -3,7 +3,7 @@ session_start();
 require_once("../../includes/db_inc.php");
 
 if (!isset($_SESSION['id_utilisateur'])) {
-    echo "Non autorisé.";
+    header("Location: ../../connexion.html");
     exit;
 }
 
@@ -12,7 +12,7 @@ $requete->execute([$_SESSION['id_utilisateur']]);
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 if (empty($jeux)) {
-    echo "Aucun jeu trouvé.";
+    header("Location: ../../afficher_jeux.php");
     exit;
 }
 
@@ -28,4 +28,4 @@ foreach ($jeux as $jeu) {
     echo "<hr>";
     echo "</div>";
 }
-?>
+

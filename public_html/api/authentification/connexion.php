@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST['nom'] ?? '';
     $motDePasse = $_POST['motDePasse'] ?? '';
 
-    if ($nom === '' || $motDePasse === '') {
-        echo "Veuillez remplir tous les champs.";
+   if ($nom === '' || $motDePasse === '') {
+        header("Location: ../../connexion.html?erreur=champs");
         exit;
     }
 
@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ../../index.php");
         exit;
     } else {
-        echo "Nom d'utilisateur ou mot de passe incorrect.";
+        header("Location: ../../connexion.html?erreur=identifiants");
+        exit;
     }
 }
-?>
+
