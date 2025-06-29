@@ -72,14 +72,31 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   <title>Mes jeux</title>
 </head>
 <body>
+<div id="message" class="message">
 <?php if ($erreurMsg !== ''): ?>
-  <p class="message error"><?php echo $erreurMsg; ?></p>
+  <?php echo $erreurMsg; ?>
+<?php elseif ($successMsg !== ''): ?>
+  <?php echo $successMsg; ?>
 <?php endif; ?>
-<?php if ($successMsg !== ''): ?>
-  <p class="message success"><?php echo $successMsg; ?></p>
-<?php endif; ?>
+</div>
 <h2>Mes jeux</h2>
-<a href="ajouter_jeux.html">Ajouter un jeu</a><br><br>
+<div class="form-container">
+  <h2>Ajouter un jeu</h2>
+  <form id="addForm" enctype="multipart/form-data">
+    <label for="add_nom">Nom du jeu</label>
+    <input type="text" name="nom" id="add_nom" required />
+    <label for="add_genre">Genre</label>
+    <input type="text" name="genre" id="add_genre" />
+    <label for="add_plateforme">Plateforme</label>
+    <input type="text" name="plateforme" id="add_plateforme" />
+    <label for="add_description">Description</label>
+    <textarea name="description" id="add_description" rows="4"></textarea>
+    <label for="add_image">Image</label>
+    <input type="file" name="image" id="add_image" />
+    <button type="submit">Ajouter</button>
+  </form>
+</div>
+<br>
 <div class="form-container">
   <h2>Filtrer</h2>
   <form method="GET" action="afficher_jeux.php">
@@ -94,26 +111,27 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   </form>
   <br>
 </div>
-<?php foreach ($jeux as $jeu): ?>
+<div id="jeuxContainer"></div>
+
+<template id="jeu-template">
   <div class="jeu">
-    <strong>Nom:</strong> <?php echo htmlspecialchars($jeu['nom']); ?><br>
-    <strong>Genre:</strong> <?php echo htmlspecialchars($jeu['genre']); ?><br>
-    <strong>Plateforme:</strong> <?php echo htmlspecialchars($jeu['plateforme']); ?><br>
-    <strong>Description:</strong> <?php echo nl2br(htmlspecialchars($jeu['description'])); ?><br>
-    <?php if ($jeu['image']): ?>
-      <img src="img/<?php echo htmlspecialchars($jeu['image']); ?>" width="100" alt="<?php echo htmlspecialchars($jeu['nom']); ?>" /><br>
-    <?php endif; ?>
-    <a href="modifier_jeu.php?id=<?php echo $jeu['jeu_id']; ?>">Modifier</a>
-    </div>
-  <form method="POST" action="api/jeux/supprimer.php" style="display:inline">
-    <input type="hidden" name="jeu_id" value="<?php echo htmlspecialchars($jeu['jeu_id']); ?>">
-    <button type="submit" onclick="return confirm('Confirmer la suppression ?');">Supprimer</button>
-  </form>
-  <hr>
-<?php endforeach; ?>
+    <strong class="nom"></strong><br>
+    <span class="genre"></span><br>
+    <span class="plateforme"></span><br>
+    <span class="description"></span><br>
+    <img class="image" width="100" style="display:none" /><br>
+    <button class="edit">Modifier</button>
+    <form class="delete-form" style="display:inline">
+      <input type="hidden" name="jeu_id" value="" />
+      <button type="submit">Supprimer</button>
+    </form>
+    <hr>
+  </div>
+</template>
 <a href="index.php">Retour au menu</a><br>
 <form method="POST" action="api/authentification/deconnexion.php">
   <button type="submit">Déconnexion</button>
 </form>
+<script src="js/jeux.js"></script>
 </body>
 </html>

@@ -87,7 +87,7 @@
     return div;
   }
 
-    // formulaire de modification inline
+  // Affiche le formulaire d'édition inline
   function showEditForm(containerEl, jeu) {
     containerEl.innerHTML = '';
     const form = document.createElement('form');
@@ -109,17 +109,13 @@
     // POST
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      const p = new URLSearchParams();
-      ['jeu_id','current_image','nom','genre','plateforme','description'].forEach(key => {
-        p.append(key, form.elements[key].value);
-      });
+      const fd = new FormData(form);
       const resp = await fetch('api/jeux/modifier.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           'X-Requested-With': 'XMLHttpRequest'
         },
-        body: p.toString()
+        body: fd
       });
       const data = await resp.json();
       if (data.success) {
@@ -135,17 +131,13 @@
   if (addForm) {
     addForm.addEventListener('submit', async e => {
       e.preventDefault();
-      const p = new URLSearchParams();
-      ['nom','genre','plateforme','description'].forEach(key => {
-        p.append(key, addForm.elements[key].value);
-      });
+      const fd = new FormData(addForm);
       const resp = await fetch('api/jeux/ajouter.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           'X-Requested-With': 'XMLHttpRequest'
         },
-        body: p.toString()
+        body: fd
       });
       const data = await resp.json();
       if (data.success) {

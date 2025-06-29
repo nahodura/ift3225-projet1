@@ -2,8 +2,10 @@
 session_start();
 require_once("../../includes/db_inc.php");
 
+header('Content-Type: application/json');
 if (!isset($_SESSION['id_utilisateur'])) {
-    header("Location: ../../connexion.html");
+    http_response_code(401);
+    echo json_encode(['success' => false, 'error' => 'unauthorized']);
     exit;
 }
 
@@ -28,20 +30,30 @@ if ($image === '') {
 }
 
 if ($jeu_id === '' || $nom === '') {
-    header("Location: ../../afficher_jeux.php?erreur=champs");
+    echo json_encode(['success' => false, 'error' => 'missing_fields']);
     exit;
 }
 
 $verif = $pdo->prepare("SELECT jeu_id FROM jeux WHERE jeu_id = ? AND id_utilisateur = ?");
 $verif->execute([$jeu_id, $_SESSION['id_utilisateur']]);
 if (!$verif->fetch()) {
-    header("Location: ../../afficher_jeux.php?erreur=autorisation");
+    http_response_code(403);
+    echo json_encode(['success' => false, 'error' => 'forbidden']);
     exit;
 }
 
 $requete = $pdo->prepare("UPDATE jeux SET nom = ?, description = ?, genre = ?, plateforme = ?, image = ? WHERE jeu_id = ? AND id_utilisateur = ?");
 $requete->execute([$nom, $description, $genre, $plateforme, $image, $jeu_id, $_SESSION['id_utilisateur']]);
 
-header("Location: ../../afficher_jeux.php?success=modif");
+echo json_encode([
+    'success' => true,
+    'jeu' => [
+        'jeu_id' => $jeu_id,
+        'nom' => $nom,
+        'description' => $description,
+        'genre' => $genre,
+        'plateforme' => $plateforme,
+        'image' => $image
+    ]
+]);
 exit;
-

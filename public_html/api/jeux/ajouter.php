@@ -2,8 +2,10 @@
 session_start();
 require_once("../../includes/db_inc.php");
 
+header('Content-Type: application/json');
 if (!isset($_SESSION['id_utilisateur'])) {
-    header("Location: ../../connexion.html");
+    http_response_code(401);
+    echo json_encode(['success' => false, 'error' => 'unauthorized']);
     exit;
 }
 
@@ -27,13 +29,20 @@ if ($image === '') {
 }
 
 if ($nom === '') {
-    header("Location: ../../ajouter_jeux.html?erreur=champs");
+    echo json_encode(['success' => false, 'error' => 'missing_fields']);
     exit;
 }
 
 $requete = $pdo->prepare("INSERT INTO jeux (nom, description, genre, plateforme, image, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)");
 $requete->execute([$nom, $description, $genre, $plateforme, $image, $_SESSION['id_utilisateur']]);
+$jeu_id = $pdo->lastInsertId();
 
-header("Location: ../../afficher_jeux.php?success=ajout");
+echo json_encode(['success' => true, 'jeu' => [
+    'jeu_id' => $jeu_id,
+    'nom' => $nom,
+    'description' => $description,
+    'genre' => $genre,
+    'plateforme' => $plateforme,
+    'image' => $image
+]]);
 exit;
-
