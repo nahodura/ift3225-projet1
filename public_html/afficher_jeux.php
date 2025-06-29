@@ -8,6 +8,7 @@ if (!isset($_SESSION['id_utilisateur'])) {
     exit;
 }
 
+// dans les cas de redirection
 $erreurMsg = '';
 $successMsg = '';
 if (isset($_GET['erreur'])) {
@@ -35,8 +36,6 @@ $nom = trim($_GET['nom'] ?? '');
 $genre = trim($_GET['genre'] ?? '');
 $plateforme = trim($_GET['plateforme'] ?? '');
 $description = trim($_GET['description'] ?? '');
-$date_debut = trim($_GET['date_debut'] ?? '');
-$date_fin = trim($_GET['date_fin'] ?? '');
 
 // requête avec le filtrage 
 $queryDB = "SELECT * FROM jeux WHERE id_utilisateur = ?";
@@ -58,21 +57,12 @@ if ($description !== '') {
     $queryDB .= " AND description LIKE ?";
     $params[] = "%$description%";
 }
-if ($date_debut !== '') {
-    $queryDB .= " AND DATE(date_creation) >= ?";
-    $params[] = $date_debut;
-}
-if ($date_fin !== '') {
-    $queryDB .= " AND DATE(date_creation) <= ?";
-    $params[] = $date_fin;
-}
 
 $queryDB .= " ORDER BY date_creation DESC";
 $requete = $pdo->prepare($queryDB);
 $requete->execute($params);
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -101,12 +91,8 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
     <input type="text" name="plateforme" id="plateforme" value="<?php echo htmlspecialchars($plateforme); ?>" />
     <label for="description">Description</label>
     <input type="text" name="description" id="description" value="<?php echo htmlspecialchars($description); ?>" />
-    <label for="date_debut">Date début</label>
-    <input type="date" name="date_debut" id="date_debut" value="<?php echo htmlspecialchars($date_debut); ?>" />
-    <label for="date_fin">Date fin</label>
-    <input type="date" name="date_fin" id="date_fin" value="<?php echo htmlspecialchars($date_fin); ?>" />
-    <button type="submit">Filtrer</button>
   </form>
+  <br>
 </div>
 <?php foreach ($jeux as $jeu): ?>
   <form method="POST" action="api/jeux/modifier.php">
@@ -118,7 +104,6 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
         <?php if ($jeu['image']): ?>
       <img src="img/<?php echo htmlspecialchars($jeu['image']); ?>" width="100" alt="<?php echo htmlspecialchars($jeu['nom']); ?>" /><br>
     <?php endif; ?>
-    <strong>Image:</strong> <input type="text" name="image" value="<?php echo htmlspecialchars($jeu['image']); ?>"><br>
     <button type="submit">Modifier</button>
   </form>
   <form method="POST" action="api/jeux/supprimer.php" style="display:inline">
