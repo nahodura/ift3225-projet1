@@ -4,7 +4,6 @@ require_once("../../includes/db_inc.php");
 
 $account_name   = trim($_POST['account_name']   ?? '');
 $account_passwd = trim($_POST['account_passwd'] ?? '');
-$account_enabled = isset($_POST['account_enabled']) ? 1 : 0;
 
 if ($account_name === '' || $account_passwd === '') {
     echo "Veuillez remplir tous les champs.";
@@ -23,11 +22,7 @@ $hash = password_hash($motDePasse, PASSWORD_DEFAULT);
 
 $requete = $pdo->prepare("INSERT INTO accounts (account_name, account_passwd) VALUES (?, ?)");
 $requete->execute([$nom, $hash]);
-$requete = $pdo->prepare(
-   "INSERT INTO accounts (account_name, account_passwd, account_enabled)
-    VALUES (?, ?, ?)"
-    );
-$requete->execute([$account_name, $hash, $account_enabled]);
+
 $id_utilisateur = $pdo->lastInsertId();
 
 // nouvelle session
