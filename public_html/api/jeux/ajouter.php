@@ -2,10 +2,17 @@
 session_start();
 require_once("../../includes/db_inc.php");
 
-header('Content-Type: application/json');
+$isAjax = isset($_POST['ajax']);
+if ($isAjax) {
+    header('Content-Type: application/json');
+}
 if (!isset($_SESSION['id_utilisateur'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'error' => 'unauthorized']);
+    if ($isAjax) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'error' => 'unauthorized']);
+    } else {
+        header('Location: ../../connexion.html');
+    }
     exit;
 }
 
@@ -29,7 +36,11 @@ if ($image === '') {
 }
 
 if ($nom === '') {
-    echo json_encode(['success' => false, 'error' => 'missing_fields']);
+    if ($isAjax) {
+        echo json_encode(['success' => false, 'error' => 'missing_fields']);
+    } else {
+        header('Location: ../../ajouter_jeux.html?erreur=champs');
+    }
     exit;
 }
 
@@ -37,12 +48,16 @@ $requete = $pdo->prepare("INSERT INTO jeux (nom, description, genre, plateforme,
 $requete->execute([$nom, $description, $genre, $plateforme, $image, $_SESSION['id_utilisateur']]);
 $jeu_id = $pdo->lastInsertId();
 
-echo json_encode(['success' => true, 'jeu' => [
-    'jeu_id' => $jeu_id,
-    'nom' => $nom,
-    'description' => $description,
-    'genre' => $genre,
-    'plateforme' => $plateforme,
-    'image' => $image
-]]);
+if ($isAjax) {
+    echo json_encode(['success' => true, 'jeu' => [
+        'jeu_id' => $jeu_id,
+        'nom' => $nom,
+        'description' => $description,
+        'genre' => $genre,
+        'plateforme' => $plateforme,
+        'image' => $image
+    ]]);
+} else {
+    header('Location: ../../afficher_jeux.php?success=ajout');
+}
 exit;

@@ -142,6 +142,8 @@
         p.append(key, addForm.elements[key].value);
       });
       
+      p.append('ajax', '1');
+
       const resp = await fetch('api/jeux/ajouter.php', {
         method: 'POST',
         headers: {
@@ -160,6 +162,6 @@
       }
     });
   }
-
+  
   loadJeux();
 })();
