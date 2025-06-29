@@ -1,25 +1,27 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['id_utilisateur']) || !isset($_SESSION['nom'])) {
     header("Location: connexion.html");
     exit;
 }
-
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil</title>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom_utilisateur']); ?> !</h1>
-  <a href="ajouter_jeux.html">Ajouter un jeu</a><br>
-  <a href="afficher_jeux.php">Voir mes jeux</a><br>
-  <form method="POST" action="api/authentification/deconnexion.php">
-      <button type="submit">Déconnexion</button>
-  </form>
+<body class="centered-page">
+    <div class="card home-card">
+        <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom']); ?> !</h1>
+        <a href="ajouter_jeu.html" class="primary-link"> Ajouter un jeu</a>
+        <a href="afficher_jeux.php" class="primary-link"> Voir mes jeux</a>
+        <form action="api/authentification/deconnexion.php" method="POST">
+            <button type="submit" class="logout-button">Déconnexion</button>
+        </form>
+    </div>
 </body>
 </html>
+
