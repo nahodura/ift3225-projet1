@@ -2,13 +2,13 @@
 session_start();
 require_once("includes/db_inc.php");
 
+// dans les cas de redirection
 if (!isset($_SESSION['id_utilisateur'])) {
     echo "Non autorisé.<br>";
     echo '<a href="connexion.html">Connexion</a>';
     exit;
 }
 
-// dans les cas de redirection
 $erreurMsg = '';
 $successMsg = '';
 if (isset($_GET['erreur'])) {
@@ -28,7 +28,6 @@ if (isset($_GET['success'])) {
     }
 }
 
-
 // bar de filtrage
 // inspiration de l'extrait de code : 
 // https://stackoverflow.com/questions/47486870/how-to-create-filter-for-a-search-in-php
@@ -37,7 +36,7 @@ $genre = trim($_GET['genre'] ?? '');
 $plateforme = trim($_GET['plateforme'] ?? '');
 $description = trim($_GET['description'] ?? '');
 
-// requête avec le filtrage 
+// Requête avec le filtrage
 $queryDB = "SELECT * FROM jeux WHERE id_utilisateur = ?";
 $params = [$_SESSION['id_utilisateur']];
 
@@ -70,19 +69,20 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes jeux</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div id="message" class="message">
+<body class="afficher-jeux-container">
 <?php if ($erreurMsg !== ''): ?>
-  <?php echo $erreurMsg; ?>
+  <div class="message error"><?php echo $erreurMsg; ?></div>
 <?php elseif ($successMsg !== ''): ?>
-  <?php echo $successMsg; ?>
+  <div class="message success"><?php echo $successMsg; ?></div>
 <?php endif; ?>
-</div>
-<h2>Mes jeux</h2>
+
+<h2 class="titre-section">Mes jeux</h2>
+
 <div class="form-container">
-<a href="ajouter_jeux.html">Ajouter un jeu</a><br><br>
-  <form id="addForm" enctype="multipart/form-data">
+  <a href="ajouter_jeux.html" class="action-button blue-button">Ajouter un jeu</a><br><br>
+  <form id="addForm" enctype="multipart/form-data" class="form-style">
     <label for="add_nom">Nom du jeu</label>
     <input type="text" name="nom" id="add_nom" required />
     <label for="add_genre">Genre</label>
@@ -93,13 +93,15 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
     <textarea name="description" id="add_description" rows="4"></textarea>
     <label for="add_image">Image</label>
     <input type="file" name="image" id="add_image" />
-    <button type="submit">Ajouter</button>
+    <button type="submit" class="action-button purple-button">Ajouter</button>
   </form>
 </div>
+
 <br>
+
 <div class="form-container">
-  <h2>Filtrer</h2>
-  <form method="GET" action="afficher_jeux.php">
+  <h2 class="titre-section">Filtrer</h2>
+  <form method="GET" action="afficher_jeux.php" class="form-style">
     <label for="nom">Nom</label>
     <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($nom); ?>" />
     <label for="genre">Genre</label>
@@ -111,27 +113,29 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   </form>
   <br>
 </div>
-<div id="jeuxContainer"></div>
+
+<div id="jeuxContainer" class="jeux-grid"></div>
 
 <template id="jeu-template">
-  <div class="jeu">
+  <div class="jeu-card">
     <strong class="nom"></strong><br>
     <span class="genre"></span><br>
     <span class="plateforme"></span><br>
     <span class="description"></span><br>
     <img class="image" width="100" style="display:none" /><br>
-    <button class="edit">Modifier</button>
+    <button class="edit action-button small-button">Modifier</button>
     <form class="delete-form" style="display:inline">
       <input type="hidden" name="jeu_id" value="" />
-      <button type="submit">Supprimer</button>
+      <button type="submit" class="action-button red-button">Supprimer</button>
     </form>
-    <hr>
   </div>
 </template>
-<a href="index.php">Retour au menu</a><br>
+
+<a href="index.php" class="return-link">Retour au menu</a><br>
 <form method="POST" action="api/authentification/deconnexion.php">
-  <button type="submit">Déconnexion</button>
+  <button type="submit" class="logout-button">Déconnexion</button>
 </form>
+
 <script src="js/jeux.js"></script>
 </body>
 </html>
