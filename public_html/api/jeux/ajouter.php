@@ -14,7 +14,7 @@ $description = $_POST['description'] ?? '';
 $genre = $_POST['genre'] ?? '';
 $plateforme = $_POST['plateforme'] ?? '';
 $image = '';
-if (!empty($_FILES['image']['name'])) {
+if (!empty($_FILES['image']['name'] ?? '')) {
     $targetDir = __DIR__ . '/../../img/';
     $nomFichier = basename($_FILES['image']['name']);
     $nomFichier = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nomFichier);

@@ -81,7 +81,7 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 </div>
 <h2>Mes jeux</h2>
 <div class="form-container">
-  <h2>Ajouter un jeu</h2>
+<a href="ajouter_jeux.html">Ajouter un jeu</a><br><br>
   <form id="addForm" enctype="multipart/form-data">
     <label for="add_nom">Nom du jeu</label>
     <input type="text" name="nom" id="add_nom" required />
