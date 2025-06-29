@@ -75,13 +75,17 @@ echo '</form>';
 echo '</div>';
 
 foreach ($jeux as $jeu) {
-    echo "<form method='POST' action='api/jeux/modifier.php'>";
+    echo "<form method='POST' action='api/jeux/modifier.php' enctype='multipart/form-data'>";
     echo "<input type='hidden' name='jeu_id' value='".htmlspecialchars($jeu['jeu_id'])."'>";
+    echo "<input type='hidden' name='current_image' value='".htmlspecialchars($jeu['image'])."'>";
     echo "<strong>Nom:</strong> <input type='text' name='nom' value='".htmlspecialchars($jeu['nom'])."'><br>";
     echo "<strong>Genre:</strong> <input type='text' name='genre' value='".htmlspecialchars($jeu['genre'])."'><br>";
     echo "<strong>Plateforme:</strong> <input type='text' name='plateforme' value='".htmlspecialchars($jeu['plateforme'])."'><br>";
     echo "<strong>Description:</strong> <textarea name='description'>".htmlspecialchars($jeu['description'])."</textarea><br>";
-    echo "<strong>Image:</strong> <input type='text' name='image' value='".htmlspecialchars($jeu['image'])."'><br>";
+    if ($jeu['image']) {
+        echo "<img src='img/".htmlspecialchars($jeu['image'])."' width='100'/><br>";
+    }
+    echo "<strong>Image:</strong> <input type='file' name='image' accept='image/*'><br>";
     echo "<button type='submit'>Modifier</button>";
     echo "</form>";
 

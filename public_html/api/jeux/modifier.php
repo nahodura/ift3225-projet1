@@ -12,7 +12,15 @@ $nom = $_POST['nom'] ?? '';
 $description = $_POST['description'] ?? '';
 $genre = $_POST['genre'] ?? '';
 $plateforme = $_POST['plateforme'] ?? '';
-$image = $_POST['image'] ?? '';
+$image = $_POST['current_image'] ?? '';
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = __DIR__ . '/../../img/';
+    $fichier = basename($_FILES['image']['name']);
+    $cheminDestination = $uploadDir . $fichier;
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $cheminDestination)) {
+        $image = $fichier;
+    }
+}
 
 if ($jeu_id === '' || $nom === '') {
     echo "Données manquantes.";

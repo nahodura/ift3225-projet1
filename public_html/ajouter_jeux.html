@@ -9,7 +9,7 @@
 <body>
   <div class="form-container">
     <h2>Ajouter un jeu</h2>
-    <form method="POST" action="api/jeux/ajouter.php">
+      <form method="POST" action="api/jeux/ajouter.php" enctype="multipart/form-data">
       <label for="nom">Nom du jeu</label>
       <input type="text" name="nom" id="nom" required />
 
@@ -22,8 +22,8 @@
       <label for="description">Description</label>
       <textarea name="description" id="description" rows="4"></textarea>
 
-      <label for="image">Image (nom ou URL)</label>
-      <input type="text" name="image" id="image" />
+      <label for="image">Image</label>
+      <input type="file" name="image" id="image" />
 
       <button type="submit">Ajouter le jeu</button>
     </form>

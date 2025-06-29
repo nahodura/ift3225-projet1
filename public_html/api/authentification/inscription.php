@@ -28,20 +28,20 @@ $id_utilisateur = $pdo->lastInsertId();
 // insére 15 jeux par défaut
 $jeuxParDefault = [
     ['Zelda', 'Adventure game', 'Adventure', 'Switch', 'zelda.jpg'],
-    ['Minecraft', 'Sandbox building game', 'Sandbox', 'PC', 'minecraft.jpg'],
+    ['Minecraft', 'Sandbox building game', 'Sandbox', 'PC', 'minecraft.jpeg'],
     ['Among Us', 'Multiplayer deduction game', 'Party', 'Mobile', 'amongus.jpg'],
     ['Super Mario Odyssey', '3D platformer', 'Platformer', 'Switch', 'mario.jpg'],
-    ['Stardew Valley', 'Farming simulation', 'Simulation', 'PC', 'stardew.jpg'],
+    ['Stardew Valley', 'Farming simulation', 'Simulation', 'PC', 'stardew.jpeg'],
     ['Overwatch', 'Team shooter', 'FPS', 'PC', 'overwatch.jpg'],
-    ['Fortnite', 'Battle royale', 'Battle Royale', 'PC', 'fortnite.jpg'],
-    ['Celeste', 'Challenging platformer', 'Platformer', 'Switch', 'celeste.jpg'],
-    ['Animal Crossing', 'Life simulation', 'Simulation', 'Switch', 'acnh.jpg'],
+    ['Fortnite', 'Battle royale', 'Battle Royale', 'PC', 'fortnite.jpeg'],
+    ['Celeste', 'Challenging platformer', 'Platformer', 'Switch', 'celeste.png'],
+    ['Animal Crossing', 'Life simulation', 'Simulation', 'Switch', 'animalcrossing.jpg'],
     ['Hades', 'Action roguelike', 'Action', 'Switch', 'hades.jpg'],
-    ['Apex Legends', 'Hero shooter battle royale', 'Battle Royale', 'PC', 'apex.jpg'],
-    ['Halo Infinite', 'Sci-fi shooter', 'FPS', 'Xbox', 'haloinfinite.jpg'],
-    ['The Witcher 3', 'Fantasy RPG', 'RPG', 'PC', 'witcher3.jpg'],
-    ['Portal 2', 'Puzzle platformer', 'Puzzle', 'PC', 'portal2.jpg'],
-    ['Cyberpunk 2077', 'Open world RPG', 'RPG', 'PC', 'cyberpunk.jpg']
+    ['Apex Legends', 'Hero shooter battle royale', 'Battle Royale', 'PC', 'apexlegends.jpeg'],
+    ['Halo Infinite', 'Sci-fi shooter', 'FPS', 'Xbox', 'haloinfinite.jpeg'],
+    ['The Witcher 3', 'Fantasy RPG', 'RPG', 'PC', 'witcherIII.jpg'],
+    ['Portal 2', 'Puzzle platformer', 'Puzzle', 'PC', 'portal2.jpeg'],
+    ['Cyberpunk 2077', 'Open world RPG', 'RPG', 'PC', 'cyberpunk.png']
 ];
 
 $insertJeu = $pdo->prepare("INSERT INTO jeux (nom, description, genre, plateforme, image, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)");
