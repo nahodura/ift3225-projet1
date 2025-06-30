@@ -7,10 +7,6 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   background: #f5f7fb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 
 .auth-container {
@@ -156,11 +152,6 @@ button:hover {
   text-decoration: underline;
 }
 
-.message {
-  margin-bottom: 1rem;
-  padding: 10px;
-  border-radius: 4px;
-}
 
 .message.error {
   background-color: #ffe0e0;
@@ -234,5 +225,70 @@ button:hover {
 .logout-button:hover {
     background-color: #e04345;
 }
+
+
+/* Afficher_jeux.php style */
+
+/* Container principal */
+.afficher-jeux-container {
+  padding: 30px;
+}
+
+/* Titres */
+.titre-section {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Messages */
+.message {
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Formulaires */
+.form-style input,
+.form-style textarea,
+.form-style button {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.btn-purple {
+  background-color: #7667F4;
+  color: white;
+  border: none;
+}
+.btn-purple:hover {
+  background-color: #5e52d9;
+}
+
+/* Tuile de jeu */
+.jeu-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Liens */
+.return-link {
+  color: #7667F4;
+  text-decoration: none;
+  font-weight: 600;
+}
+.return-link:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
 
 
