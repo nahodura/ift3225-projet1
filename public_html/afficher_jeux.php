@@ -108,6 +108,10 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 
   <div id="jeuxContainer" class="row jeux-grid"></div>
 
+  <nav class="mt-4">
+    <ul id="pagination" class="pagination justify-content-center"></ul>
+  </nav>
+
 <template id="jeu-template">
     <div class="col-md-4 mb-4">
       <div class="jeu-card">

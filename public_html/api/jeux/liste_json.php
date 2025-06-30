@@ -36,10 +36,22 @@ if ($description !== '') {
     $params[] = "%$description%";
 }
 
-$query .= " ORDER BY date_creation DESC";
+$page = intval($_GET['page'] ?? '1');
+if ($page < 1) $page = 1;
+$perPage = 15;
+$offset = ($page - 1) * $perPage;
+
+$countQuery = preg_replace('/^SELECT\s+\*/i', 'SELECT COUNT(*)', $query);
+$countStmt = $pdo->prepare($countQuery);
+$countStmt->execute($params);
+$total = (int)$countStmt->fetchColumn();
+$totalPages = (int)ceil($total / $perPage);
+
+$query .= " ORDER BY date_creation DESC LIMIT $perPage OFFSET ?";
+$params[] = $offset;
 $requete = $pdo->prepare($query);
 $requete->execute($params);
 
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 
-echo json_encode($jeux);
+echo json_encode(['jeux' => $jeux, 'page' => $page, 'total_pages' => $totalPages]);
