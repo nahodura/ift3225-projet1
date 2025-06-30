@@ -15,7 +15,7 @@ VALUES
   ('Stardew Valley', 'Farming simulation', 'Simulation', 'PC', 'stardew.jpeg', @user_id),
   ('Overwatch', 'Team shooter', 'FPS', 'PC', 'overwatch.jpg', @user_id),
   ('Fortnite', 'Battle royale', 'Battle Royale', 'PC', 'fortnite.jpeg', @user_id),
-  ('Celeste', 'Challenging platformer', 'Platformer', 'Switch', 'celeste.png', @user_id),
+  ('Celeste', 'Challenging platformer', 'Platformer', 'Switch', 'celeste.jpeg', @user_id),
   ('Animal Crossing', 'Life simulation', 'Simulation', 'Switch', 'animalcrossing.jpg', @user_id),
   ('Hades', 'Action roguelike', 'Action', 'Switch', 'hades.jpg', @user_id),
   ('Apex Legends', 'Hero shooter battle royale', 'Battle Royale', 'PC', 'apexlegends.jpeg', @user_id),

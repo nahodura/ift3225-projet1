@@ -41,7 +41,7 @@ $jeuxParDefault = [
     ['Stardew Valley', 'Farming simulation', 'Simulation', 'PC', 'stardew.jpeg'],
     ['Overwatch', 'Team shooter', 'FPS', 'PC', 'overwatch.jpg'],
     ['Fortnite', 'Battle royale', 'Battle Royale', 'PC', 'fortnite.jpeg'],
-    ['Celeste', 'Challenging platformer', 'Platformer', 'Switch', 'celeste.png'],
+    ['Celeste', 'Challenging platformer', 'Platformer', 'Switch', 'celeste.jpeg'],
     ['Animal Crossing', 'Life simulation', 'Simulation', 'Switch', 'animalcrossing.jpg'],
     ['Hades', 'Action roguelike', 'Action', 'Switch', 'hades.jpg'],
     ['Apex Legends', 'Hero shooter battle royale', 'Battle Royale', 'PC', 'apexlegends.jpeg'],
