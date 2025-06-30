@@ -1,33 +1,36 @@
 (async function() {
 
-  const messageEl = document.getElementById('message');
-  const container = document.getElementById('jeuxContainer');
-  const template = document.getElementById('jeu-template');
-  const addForm = document.getElementById('addForm');
+const messageEl = document.getElementById('message');
+const container = document.getElementById('jeuxContainer');
+const template = document.getElementById('jeu-template');
+const addForm = document.getElementById('addForm');
 
-  function showMessage(text, type) {
-    if (!messageEl) return;
-    messageEl.textContent = text;
-    messageEl.className = 'message ' + (type || '');
-  }
-
-
-  function escapeHtml(text) {
+function escapeHtml(text) {
     return text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
   }
 
+  // affiche les message
+function showMessage(text, type) {
+    if (!messageEl) return;
+    messageEl.textContent = text;
+    messageEl.className = 'message ' + (type || '');
+  }
+
   // charge la liste des jeux 
-  async function loadJeux() {
-    const res = await fetch('api/jeux/liste_json.php', { method: 'GET' });
+async function loadJeux() {
+    const query = window.location.search;
+    const url = 'api/jeux/liste_json.php' + (query ? query : '');  // pour filtrer
+    const res = await fetch(url, { method: 'GET' });
     if (!res.ok) return;
-    const jeux = await res.json();  // conforme aux exemples fetch+json fileciteturn4file12
+    const jeux = await res.json(); 
     container.innerHTML = '';
     jeux.forEach(jeu => container.appendChild(renderJeu(jeu)));
   }
 
+    // affiche un jeu
 function renderJeu(jeu) {
     const el = template.content.firstElementChild.cloneNode(true);
     el.dataset.jeuId = jeu.jeu_id;

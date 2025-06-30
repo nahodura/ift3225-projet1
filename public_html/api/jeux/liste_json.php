@@ -11,9 +11,35 @@ if (!isset($_SESSION['id_utilisateur'])) {
 }
 
 // retourne liste des jeux de l'utilisateur en format JSON
+$nom = trim($_GET['nom'] ?? '');
+$genre = trim($_GET['genre'] ?? '');
+$plateforme = trim($_GET['plateforme'] ?? '');
+$description = trim($_GET['description'] ?? '');
 
-$requete = $pdo->prepare("SELECT * FROM jeux WHERE id_utilisateur = ? ORDER BY date_creation DESC");
-$requete->execute([$_SESSION['id_utilisateur']]);
+$query = "SELECT * FROM jeux WHERE id_utilisateur = ?";
+$params = [$_SESSION['id_utilisateur']];
+
+if ($nom !== '') {
+    $query .= " AND nom LIKE ?";
+    $params[] = "%$nom%";
+}
+if ($genre !== '') {
+    $query .= " AND genre LIKE ?";
+    $params[] = "%$genre%";
+}
+if ($plateforme !== '') {
+    $query .= " AND plateforme LIKE ?";
+    $params[] = "%$plateforme%";
+}
+if ($description !== '') {
+    $query .= " AND description LIKE ?";
+    $params[] = "%$description%";
+}
+
+$query .= " ORDER BY date_creation DESC";
+$requete = $pdo->prepare($query);
+$requete->execute($params);
+
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($jeux);

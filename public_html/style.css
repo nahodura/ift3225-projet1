@@ -270,13 +270,13 @@ button:hover {
 
 .filter-form {
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-end;
   gap: 15px;
 }
+
 .filter-form .col-12 {
-  flex: 0 0 auto;
-  width: auto;
+  flex: 0 0 100%;
 }
 
 .btn-purple {
@@ -319,7 +319,6 @@ button:hover {
 .jeu-card .card-actions {
   margin-top: auto;
 }
-
 
 .jeu-card img {
   width: 100%;
