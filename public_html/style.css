@@ -173,53 +173,66 @@ button:hover {
 }
 
 
-/*  Styles spécifiques à afficher_jeux.php  */
-
-.afficher-jeux .btn-primary {
-    background-color: #7667F4;
-    border-color: #7667F4;
-}
-.afficher-jeux .btn-primary:hover,
-.afficher-jeux .btn-primary:focus {
-    background-color: #5e52d9;
-    border-color: #5e52d9;
-}
-
-.afficher-jeux .btn-danger {
-    background-color: #ff4d4f;
-    border-color: #ff4d4f;
-}
-.afficher-jeux .btn-danger:hover,
-.afficher-jeux .btn-danger:focus {
-    background-color: #e04345;
-    border-color: #e04345;
+/* Page centrée */
+.centered-page {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.afficher-jeux .btn-link {
-    color: #7667F4;
-    font-weight: 600;
-    text-decoration: none;
-}
-.afficher-jeux .btn-link:hover {
-    text-decoration: underline;
-}
-
-/* Cartes des jeux */
-.afficher-jeux .card {
+/* Carte d'accueil */
+.home-card {
+    background: white;
+    padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
 }
-.afficher-jeux .card-title {
+
+/* Boutons d'action (liens stylisés) */
+.action-button {
+    display: block;
+    margin: 12px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+/* Boutons bleus */
+.blue-button {
+    background-color: #4A3AFF;
+    color: white;
+}
+
+.blue-button:hover {
+    background-color: #3a2ed9;
+}
+
+/* Bouton de déconnexion */
+.logout-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
     font-weight: bold;
-    color: #333;
 }
-.afficher-jeux .card-text {
-    color: #555;
-    font-size: 0.95em;
+
+.logout-button:hover {
+    background-color: #e04345;
 }
-.afficher-jeux .image {
-    max-height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-}
+
 
