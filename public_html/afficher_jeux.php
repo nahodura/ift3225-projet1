@@ -81,7 +81,7 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   <?php endif; ?>
 
   <h2 class="titre-section mb-4">Mes jeux</h2>
-  <a href="ajouter_jeux.html" class="btn btn-purple w-100 mb-3">Ajouter un jeu</a>
+  <a href="ajouter_jeux.html" class="btn btn-purple btn-add-game w-100 mb-3">Ajouter un jeu</a>
 
   <h3>Filtrer</h3>
   <form method="GET" action="afficher_jeux.php" class="row g-3 mb-4 form-style filter-form">
@@ -108,7 +108,7 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
 
   <div id="jeuxContainer" class="row jeux-grid"></div>
 
-  <template id="jeu-template">
+<template id="jeu-template">
     <div class="col-md-4 mb-4">
       <div class="jeu-card">
         <strong class="nom d-block mb-1"></strong>
@@ -116,11 +116,13 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
         <span class="plateforme d-block"></span>
         <span class="description d-block mb-2"></span>
         <img class="image img-fluid mb-3" alt="">
-        <button class="btn btn-purple w-100 mb-2 edit">Modifier</button>
-        <form class="delete-form">
-          <input type="hidden" name="jeu_id">
-          <button type="submit" class="btn btn-danger w-100">Supprimer</button>
-        </form>
+        <div class="card-actions">
+          <button class="btn btn-purple w-100 mb-2 edit">Modifier</button>
+          <form class="delete-form mt-1">
+            <input type="hidden" name="jeu_id">
+            <button type="submit" class="btn btn-danger w-100">Supprimer</button>
+          </form>
+        </div>
       </div>
     </div>
   </template>

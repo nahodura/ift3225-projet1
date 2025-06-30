@@ -268,13 +268,33 @@ button:hover {
   margin-bottom: 30px;
 }
 
+.filter-form {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: 15px;
+}
+.filter-form .col-12 {
+  flex: 0 0 auto;
+  width: auto;
+}
+
 .btn-purple {
   background-color: #7667F4;
   color: white;
   border: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-purple:hover {
   background-color: #5e52d9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add-game {
+  font-size: 1.1rem;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 8px;
 }
 
 /* Tuile de jeu */
@@ -296,9 +316,14 @@ button:hover {
   width: 100%;
 }
 
+.jeu-card .card-actions {
+  margin-top: auto;
+}
+
+
 .jeu-card img {
   width: 100%;
-  height: auto;
+  height: 160px;
   border-radius: 8px;
   object-fit: cover;
 }
