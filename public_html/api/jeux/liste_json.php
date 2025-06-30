@@ -10,6 +10,8 @@ if (!isset($_SESSION['id_utilisateur'])) {
     exit;
 }
 
+// retourne liste des jeux de l'utilisateur en format JSON
+
 $requete = $pdo->prepare("SELECT * FROM jeux WHERE id_utilisateur = ? ORDER BY date_creation DESC");
 $requete->execute([$_SESSION['id_utilisateur']]);
 $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);

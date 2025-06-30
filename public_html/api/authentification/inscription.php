@@ -11,6 +11,7 @@ if ($nom === '' || $motDePasse === '' || $email === '') {
     exit;
 }
 
+// pour validation email : https://www.php.net/manual/en/function.filter-var.php
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header("Location: ../../inscription.html?erreur=email");
     exit;
@@ -47,7 +48,7 @@ $jeuxParDefault = [
     ['Halo Infinite', 'Sci-fi shooter', 'FPS', 'Xbox', 'haloinfinite.jpeg'],
     ['The Witcher 3', 'Fantasy RPG', 'RPG', 'PC', 'witcherIII.jpg'],
     ['Portal 2', 'Puzzle platformer', 'Puzzle', 'PC', 'portal2.jpeg'],
-    ['Cyberpunk 2077', 'Open world RPG', 'RPG', 'PC', 'cyberpunk.png']
+    ['Cyberpunk 2077', 'Open world RPG', 'RPG', 'PC', 'cyberpunk.jpg']
 ];
 
 $insertJeu = $pdo->prepare("INSERT INTO jeux (nom, description, genre, plateforme, image, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)");

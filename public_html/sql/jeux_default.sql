@@ -22,4 +22,4 @@ VALUES
   ('Halo Infinite', 'Sci-fi shooter', 'FPS', 'Xbox', 'haloinfinite.jpeg', @user_id),
   ('The Witcher 3', 'Fantasy RPG', 'RPG', 'PC', 'witcherIII.jpg', @user_id),
   ('Portal 2', 'Puzzle platformer', 'Puzzle', 'PC', 'portal2.jpeg', @user_id),
-  ('Cyberpunk 2077', 'Open world RPG', 'RPG', 'PC', 'cyberpunk.png', @user_id);
+  ('Cyberpunk 2077', 'Open world RPG', 'RPG', 'PC', 'cyberpunk.jpg', @user_id);
