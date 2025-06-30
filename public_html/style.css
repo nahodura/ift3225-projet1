@@ -251,10 +251,21 @@ button:hover {
 }
 
 /* Formulaires */
+.form-style {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
 .form-style input,
 .form-style textarea,
 .form-style button {
   font-family: 'Segoe UI', sans-serif;
+}
+
+.filter-form,
+.add-form {
+  margin-bottom: 30px;
 }
 
 .btn-purple {
@@ -267,11 +278,33 @@ button:hover {
 }
 
 /* Tuile de jeu */
+.jeux-grid {
+  margin-top: 20px;
+}
+
+.jeux-grid .col-md-4 {
+  display: flex;
+}
+
 .jeu-card {
   background: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.jeu-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.jeu-card .image {
+  display: none;
 }
 
 /* Liens */

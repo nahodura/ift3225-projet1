@@ -81,38 +81,10 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
   <?php endif; ?>
 
   <h2 class="titre-section mb-4">Mes jeux</h2>
-
-  <div class="mb-5">
-    <a href="ajouter_jeux.html" class="btn btn-purple w-100 mb-3">Ajouter un jeu</a>
-    <form id="addForm" enctype="multipart/form-data" class="row g-3 form-style">
-      <div class="col-md-4">
-        <label for="add_nom" class="form-label">Nom du jeu</label>
-        <input type="text" name="nom" id="add_nom" class="form-control" required>
-      </div>
-      <div class="col-md-4">
-        <label for="add_genre" class="form-label">Genre</label>
-        <input type="text" name="genre" id="add_genre" class="form-control">
-      </div>
-      <div class="col-md-4">
-        <label for="add_plateforme" class="form-label">Plateforme</label>
-        <input type="text" name="plateforme" id="add_plateforme" class="form-control">
-      </div>
-      <div class="col-12">
-        <label for="add_description" class="form-label">Description</label>
-        <textarea name="description" id="add_description" rows="3" class="form-control"></textarea>
-      </div>
-      <div class="col-12">
-        <label for="add_image" class="form-label">Image</label>
-        <input type="file" name="image" id="add_image" class="form-control">
-      </div>
-      <div class="col-12">
-        <button type="submit" class="btn btn-purple w-100">Ajouter</button>
-      </div>
-    </form>
-  </div>
+  <a href="ajouter_jeux.html" class="btn btn-purple w-100 mb-3">Ajouter un jeu</a>
 
   <h3>Filtrer</h3>
-  <form method="GET" action="afficher_jeux.php" class="row g-3 mb-4 form-style">
+  <form method="GET" action="afficher_jeux.php" class="row g-3 mb-4 form-style filter-form">
     <div class="col-md-3">
       <label for="nom" class="form-label">Nom</label>
       <input type="text" name="nom" id="nom" class="form-control" value="<?php echo htmlspecialchars($nom); ?>">
@@ -143,7 +115,7 @@ $jeux = $requete->fetchAll(PDO::FETCH_ASSOC);
         <span class="genre d-block"></span>
         <span class="plateforme d-block"></span>
         <span class="description d-block mb-2"></span>
-        <img class="image img-fluid mb-3" style="display:none">
+        <img class="image img-fluid mb-3" alt="">
         <button class="btn btn-purple w-100 mb-2 edit">Modifier</button>
         <form class="delete-form">
           <input type="hidden" name="jeu_id">

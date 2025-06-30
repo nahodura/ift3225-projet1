@@ -2,6 +2,7 @@
 
   const messageEl = document.getElementById('message');
   const container = document.getElementById('jeuxContainer');
+  const template = document.getElementById('jeu-template');
   const addForm = document.getElementById('addForm');
 
   function showMessage(text, type) {
@@ -27,37 +28,26 @@
     jeux.forEach(jeu => container.appendChild(renderJeu(jeu)));
   }
 
-  function renderJeu(jeu) {
-    const div = document.createElement('div');
-    div.dataset.jeuId = jeu.jeu_id;
+function renderJeu(jeu) {
+    const el = template.content.firstElementChild.cloneNode(true);
+    el.dataset.jeuId = jeu.jeu_id;
 
-    // propriétés du jeu
-    const pNom = document.createElement('p');
-    pNom.textContent = 'Nom: ' + escapeHtml(jeu.nom);
-    div.appendChild(pNom);
-    const pGenre = document.createElement('p');
-    pGenre.textContent = 'Genre: ' + escapeHtml(jeu.genre || '');
-    div.appendChild(pGenre);
-    const pPlateforme = document.createElement('p');
-    pPlateforme.textContent = 'Plateforme: ' + escapeHtml(jeu.plateforme || '');
-    div.appendChild(pPlateforme);
-    const pDesc = document.createElement('p');
-    pDesc.textContent = 'Description: ' + escapeHtml(jeu.description || '');
-    div.appendChild(pDesc);
+    el.querySelector('.nom').textContent = jeu.nom;
+    el.querySelector('.genre').textContent = jeu.genre ? 'Genre: ' + jeu.genre : '';
+    el.querySelector('.plateforme').textContent = jeu.plateforme ? 'Plateforme: ' + jeu.plateforme : '';
+    el.querySelector('.description').textContent = jeu.description ? 'Description: ' + jeu.description : '';
 
-     if (jeu.image) {
-      const img = document.createElement('img');
+    const img = el.querySelector('.image');
+    if (jeu.image) {
       img.src = 'img/' + encodeURIComponent(jeu.image);
-      img.alt = '';
-      img.width = 100;
-      img.height = 100;
-      img.style.objectFit = 'cover';
-      div.appendChild(img);
+      img.alt = jeu.nom;
+      img.style.display = 'block';
+    } else {
+      img.remove();
     }
 
-    //  formulaire de suppression
-    const delForm = document.createElement('form');
-    delForm.innerHTML = '<input type="hidden" name="jeu_id" value="' + jeu.jeu_id + '"><button type="submit">Supprimer</button>';
+    const delForm = el.querySelector('.delete-form');
+    delForm.elements.jeu_id.value = jeu.jeu_id;
     delForm.addEventListener('submit', async e => {
       e.preventDefault();
       if (!confirm('Confirmer la suppression ?')) return;
@@ -74,34 +64,29 @@
       const data = await resp.json();
       if (data.success) {
         showMessage('Jeu supprimé.', 'success');
-        div.remove();
+        el.remove();
       }
     });
-    div.appendChild(delForm);
 
-    //  formulaire modif.
-    const editBtn = document.createElement('button');
-    editBtn.type = 'button';
-    editBtn.textContent = 'Modifier';
-    editBtn.addEventListener('click', () => showEditForm(div, jeu));
-    div.appendChild(editBtn);
+    el.querySelector('.edit').addEventListener('click', () => showEditForm(el, jeu));
 
-    return div;
+    return el;
   }
 
   // formulaire modif. inline
   function showEditForm(containerEl, jeu) {
     containerEl.innerHTML = '';
     const form = document.createElement('form');
-    form.innerHTML = 
+    form.className = 'form-style';
+    form.innerHTML =
       '<input type="hidden" name="jeu_id" value="' + jeu.jeu_id + '">' +
       '<input type="hidden" name="current_image" value="' + escapeHtml(jeu.image || '') + '">' +
-      '<label>Nom</label><input name="nom" value="' + escapeHtml(jeu.nom) + '"><br>' +
-      '<label>Genre</label><input name="genre" value="' + escapeHtml(jeu.genre || '') + '"><br>' +
-      '<label>Plateforme</label><input name="plateforme" value="' + escapeHtml(jeu.plateforme || '') + '"><br>' +
-      '<label>Description</label><textarea name="description">' + escapeHtml(jeu.description || '') + '</textarea><br>' +
-      '<button type="submit">Enregistrer</button> ' +
-      '<button type="button" class="cancel">Annuler</button>';
+      '<div class="mb-2"><label class="form-label">Nom</label><input class="form-control" name="nom" value="' + escapeHtml(jeu.nom) + '"></div>' +
+      '<div class="mb-2"><label class="form-label">Genre</label><input class="form-control" name="genre" value="' + escapeHtml(jeu.genre || '') + '"></div>' +
+      '<div class="mb-2"><label class="form-label">Plateforme</label><input class="form-control" name="plateforme" value="' + escapeHtml(jeu.plateforme || '') + '"></div>' +
+      '<div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" name="description">' + escapeHtml(jeu.description || '') + '</textarea></div>' +
+      '<button type="submit" class="btn btn-purple w-100 mb-2">Enregistrer</button>' +
+      '<button type="button" class="btn btn-secondary w-100 cancel">Annuler</button>';
 
     form.querySelector('.cancel').addEventListener('click', e => {
       e.preventDefault();
