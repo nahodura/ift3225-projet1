@@ -3,16 +3,22 @@ session_start();
 require_once("../../includes/db_inc.php");
 
 $nom        = trim($_POST['nom']        ?? '');
+$email      = trim($_POST['email']      ?? '');
 $motDePasse = trim($_POST['motDePasse'] ?? '');
 
-if ($nom === '' || $motDePasse === '') {
+if ($nom === '' || $motDePasse === '' || $email === '') {
     header("Location: ../../inscription.html?erreur=champs");
     exit;
 }
 
-// si username existe déjà
-$requete = $pdo->prepare("SELECT account_id FROM accounts WHERE account_name = ?");
-$requete->execute([$nom]);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    header("Location: ../../inscription.html?erreur=email");
+    exit;
+}
+
+// si username ou email existe déjà
+$requete = $pdo->prepare("SELECT account_id FROM accounts WHERE account_name = ? OR account_email = ?");
+$requete->execute([$nom, $email]);
 if ($requete->fetch()) {
     header("Location: ../../inscription.html?erreur=existant");
     exit;
@@ -20,8 +26,8 @@ if ($requete->fetch()) {
 
 $hash = password_hash($motDePasse, PASSWORD_DEFAULT);
 
-$requete = $pdo->prepare("INSERT INTO accounts (account_name, account_passwd) VALUES (?, ?)");
-$requete->execute([$nom, $hash]);
+$requete = $pdo->prepare("INSERT INTO accounts (account_name, account_email, account_passwd) VALUES (?, ?, ?)");
+$requete->execute([$nom, $email, $hash]);
 
 $id_utilisateur = $pdo->lastInsertId();
 

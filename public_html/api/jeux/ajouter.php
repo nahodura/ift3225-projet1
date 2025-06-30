@@ -2,6 +2,10 @@
 session_start();
 require_once("../../includes/db_inc.php");
 
+
+// information prise depuis : 
+// https://www.pierre-giraud.com/javascript-apprendre-coder-cours/ajax-xmlhttprequest/
+// https://www.reddit.com/r/webdev/comments/jrwa42/whats_the_difference_between_xmlhttp_http_ajax/
 $isAjax = isset($_POST['ajax']);
 if ($isAjax) {
     header('Content-Type: application/json');
