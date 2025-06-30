@@ -10,8 +10,8 @@
   <div class="auth-container">
     <h2>Connexion</h2>
     <form method="POST" action="api/authentification/connexion.php">
-      <label for="nom">Nom d'utilisateur</label>
-      <input type="text" id="nom" name="nom" required />
+      <label for="email">Adresse électronique</label>
+      <input type="email" id="email" name="email" required />
 
       <label for="motDePasse">Mot de passe</label>
       <input type="password" id="motDePasse" name="motDePasse" required />
@@ -29,7 +29,7 @@
       msg.textContent = 'Veuillez remplir tous les champs.';
       msg.classList.add('error');
     } else if (err === 'identifiants') {
-      msg.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+      msg.textContent = "Adresse électronique ou mot de passe incorrect.";
       msg.classList.add('error');
     } else if (success === 'deconnexion') {
       msg.textContent = 'Déconnecté avec succès.';

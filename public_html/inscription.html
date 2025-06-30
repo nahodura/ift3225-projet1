@@ -8,9 +8,13 @@
 <body>
   <div class="auth-container">
     <h2>Inscription</h2>
+    <div id="message" class="message"></div>
     <form method="POST" action="api/authentification/inscription.php">
       <label for="nom">Nom d'utilisateur *</label>
       <input type="text" id="nom" name="nom" required />
+
+      <label for="email">E-mail *</label>
+      <input type="email" id="email" name="email" required />
 
       <label for="motDePasse">Mot de passe *</label>
       <input type="password" id="motDePasse" name="motDePasse" required />
@@ -28,6 +32,10 @@
       msg.classList.add('error');
     } else if (err === 'existant') {
       msg.textContent = "Nom d'utilisateur déjà utilisé.";
+      msg.classList.add('error');
+    }
+    else if (err === 'email') {
+      msg.textContent = "Adresse électronique invalide.";
       msg.classList.add('error');
     }
   </script>
